@@ -11,7 +11,7 @@ install_github("kpolimis/yandextexttranslater")
 
 Register for a free Yandex Translate API key [here](https://tech.yandex.com/translate/doc/dg/concepts/api-overview-docpage/)
 
-##Examples
+## Usage
 
 View all functions in yandextexttranslater
 
