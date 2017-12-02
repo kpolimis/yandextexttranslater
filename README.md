@@ -2,7 +2,7 @@
 
 R package to interface with Yandex Translate API for text translation services  
 
-To install from github:
+Use devtools package to install from GitHub:
 
 ```R
 library(devtools)
@@ -20,7 +20,7 @@ library(yandextexttranslater)
 ls("package:yandextexttranslater")
 ```
 ```R
-#>"load_api_key"   "yandex_detect_language"   "yandex_supported_languages" "yandex_translate"   
+[1] "load_api_key"   "yandex_detect_language"   "yandex_supported_languages"   "yandex_translate"
 ```
 First, load and save Yandex API key to .yml file and global environment for Yandex Translate API services
 ```R
