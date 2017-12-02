@@ -1,0 +1,20 @@
+Package: yandextexttranslater
+Title: R package to interface with the Yandex Translate API
+Version: 0.1
+Authors@R: person("Kivan", "Polimis", email = "kivan.polimis@gmail.com", role = c("aut", "cre"))
+Description: Uses the Yandex Translate API services for text translation services such as language detection and text translation
+Depends: R (>= 3.4.1)
+License: MIT
+Encoding: UTF-8
+LazyData: true
+URL: https://github.com/kpolimis/yandextexttranslater
+BugReports: https://github.com/kpolimis/yandextexttranslater/issues
+Maintainer: 'Kivan Polimis' <kivan.polimis@com>
+Imports:
+    dplyr,
+    httr,
+    stringi,
+    stringr,
+    tibble,
+    yaml
+RoxygenNote: 6.0.1
