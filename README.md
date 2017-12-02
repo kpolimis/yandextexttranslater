@@ -26,8 +26,8 @@ Load and save Yandex API key to .yml file and global environment for Yandex Tran
 ```R
 load_api_key()
 ```
-## Yandex services
-### See Resources below for full API documentations
+## Yandex Translate API services
+### See Resources below for full API documentation
 
 Get a list of translation directions and abbreviation-language pairs for language abbreviations supported by Yandex Translate API
 
