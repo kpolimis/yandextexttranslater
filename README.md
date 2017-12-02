@@ -22,11 +22,11 @@ ls("package:yandextexttranslater")
 ```R
 #>"load_api_key"   "yandex_detect_language"   "yandex_supported_languages" "yandex_translate"   
 ```
-Load and save Yandex API key to .yml file and global environment for Yandex Translate API services
+First, load and save Yandex API key to .yml file and global environment for Yandex Translate API services
 ```R
 load_api_key()
 ```
-## Yandex Translate API services
+### Yandex Translate API services
 ### See Resources below for full API documentation
 
 Get a list of translation directions and abbreviation-language pairs for language abbreviations supported by Yandex Translate API
