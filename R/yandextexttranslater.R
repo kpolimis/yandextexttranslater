@@ -15,23 +15,22 @@
 #' load_api_key()
 
 load_api_key = function(){
-  n = readline(prompt = "Enter your yandex api key: ")
   destfile = "yandex_api_key.yml"
   if(file.exists(destfile)){
     print(" yandex_api_key.yml already exists")
+    print("adding previously saved yandex api credentials to environment")
     yandex_api_key <<- yaml.load_file("yandex_api_key.yml")$api_key
-
-  }
+    }
   if(!file.exists(destfile)){
+    n = readline(prompt = "Enter your yandex api key: ")
     print("creating yandex_api_key.yml")
     api_yaml = paste(as.name("api_key: "), "\"", n, "\"", sep="")
     res = tryCatch(write(api_yaml,file = destfile),
-                                  method = "auto",
-                    error=function(e) 1)
+                   method = "auto",
+                   error=function(e) 1)
 
-  yandex_api_key <<- yaml.load_file("yandex_api_key.yml")$api_key
-
-  }
+    yandex_api_key <<- yaml.load_file("yandex_api_key.yml")$api_key
+    }
   }
 
 #' Gets a list of translation directions supported by the service
@@ -48,8 +47,7 @@ load_api_key = function(){
 #' available_translations = supported_languages[[1]]
 #' abbreviations = supported_languages[[2]]
 
-yandex_supported_languages = function(yandex_api_key, lang="en")
-{
+yandex_supported_languages = function(yandex_api_key, lang="en"){
   url = "https://translate.yandex.net/api/v1.5/tr.json/getLangs?"
   body = list(key=yandex_api_key, ui=lang)
   post_content = POST(url, body = body, encode = "form")
@@ -72,8 +70,7 @@ yandex_supported_languages = function(yandex_api_key, lang="en")
   language_abbreviations = language_abbreviations %>%
     mutate_if(is.factor, as.character)
   return(list(supported_languages, language_abbreviations))
-
-}
+  }
 
 #' Detects the language of the specified text.
 #'
@@ -86,19 +83,16 @@ yandex_supported_languages = function(yandex_api_key, lang="en")
 #' detected_languaged = yandex_detect_language(yandex_api_key, text="voglio mangiare cena")
 
 
-yandex_detect_language=function(yandex_api_key, text="")
-{
+yandex_detect_language=function(yandex_api_key, text=""){
   url="https://translate.yandex.net/api/v1.5/tr.json/detect?"
-  if(text != "")
-  {
+  if(text != ""){
     body = list(key=yandex_api_key, text=text)
-
-  }
+    }
   post_content = POST(url, body = body, encode = "form")
   parsed_content = content(post_content, "parsed")
   detected_language = parsed_content$lang
   return(detected_language)
-}
+  }
 
 #' Translates text to the specified language
 #'
@@ -114,17 +108,14 @@ yandex_detect_language=function(yandex_api_key, text="")
 #' @examples
 #' translated_text = yandex_translate(yandex_api_key, text="voglio mangiare cena", lang="it-en")
 
-yandex_translate=function(yandex_api_key, text="",lang="")
-{
+yandex_translate = function(yandex_api_key, text="",lang=""){
   url="https://translate.yandex.net/api/v1.5/tr.json/translate?"
 
-  if(text != "")
-  {
+  if(text != ""){
     body = list(key=yandex_api_key, text=text)
     }
 
-  if(lang != "")
-  {
+  if(lang != ""){
     body = list(key=yandex_api_key, text=text, lang=lang)
   }
 
@@ -132,5 +123,4 @@ yandex_translate=function(yandex_api_key, text="",lang="")
   parsed_content = content(post_content, "parsed")
   translated_text = parsed_content$text[[1]]
   return(translated_text)
-
-}
+  }
