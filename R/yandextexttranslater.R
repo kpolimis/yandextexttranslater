@@ -1,4 +1,5 @@
 #' @import dplyr
+#' @import here
 #' @import httr
 #' @import stringi
 #' @import stringr
@@ -8,30 +9,37 @@
 #' @title Uses console input to save and load .yml file with yandex api key
 #'
 #' @return Creates global environment variable yandex_api_key in one of two ways.
-#' First, if yandex_api_key.yml exists, yandex_api_key takes the value of api_key field in the .yml file.
-#' Otherwise, console input is saved to yandex_api_key.yml and the api_key field from .yml is the yandex_api_key
+#' First, given a file directory (default directory created with `here` package), 
+#' if yandex_api_key.yml exists, yandex_api_key takes the value of api_key field in the .yml file.
+#' Otherwise, console input is saved to yandex_api_key.yml in the given directory 
+#' and the api_key field from .yml is the yandex_api_key
 #' @export
 #' @examples
-#' load_api_key()
+#' load_api_key(directory)
 
-load_api_key = function(){
-  n = readline(prompt = "Enter your yandex api key: ")
-  destfile = "yandex_api_key.yml"
+load_api_key = function(directory){
+  if (directory==""){
+    folder = here()
+  } else {
+    folder = directory
+    }
+  destfile = paste(folder, "yandex_api_key.yml", sep = "/")
   if(file.exists(destfile)){
-    print(" yandex_api_key.yml already exists")
-    yandex_api_key <<- yaml.load_file("yandex_api_key.yml")$api_key
-
-  }
+    cat("\n")
+    print("yandex_api_key.yml already exists")
+    print("adding previously saved yandex api credentials to environment")
+    yandex_api_key <<- yaml.load_file(destfile)$api_key
+    }
   if(!file.exists(destfile)){
+    n = readline(prompt = "Enter your yandex api key: ")
     print("creating yandex_api_key.yml")
     api_yaml = paste(as.name("api_key: "), "\"", n, "\"", sep="")
-    res = tryCatch(write(api_yaml,file = destfile),
-                                  method = "auto",
-                    error=function(e) 1)
+    res = tryCatch(write(api_yaml,file =  destfile,
+                   method = "auto",
+                   error=function(e) 1))
 
-  yandex_api_key <<- yaml.load_file("yandex_api_key.yml")$api_key
-
-  }
+    yandex_api_key <<- yaml.load_file(destfile)$api_key
+    }
   }
 
 #' Gets a list of translation directions supported by the service
@@ -48,8 +56,7 @@ load_api_key = function(){
 #' available_translations = supported_languages[[1]]
 #' abbreviations = supported_languages[[2]]
 
-yandex_supported_languages = function(yandex_api_key, lang="en")
-{
+yandex_supported_languages = function(yandex_api_key, lang="en"){
   url = "https://translate.yandex.net/api/v1.5/tr.json/getLangs?"
   body = list(key=yandex_api_key, ui=lang)
   post_content = POST(url, body = body, encode = "form")
@@ -72,8 +79,7 @@ yandex_supported_languages = function(yandex_api_key, lang="en")
   language_abbreviations = language_abbreviations %>%
     mutate_if(is.factor, as.character)
   return(list(supported_languages, language_abbreviations))
-
-}
+  }
 
 #' Detects the language of the specified text.
 #'
@@ -86,19 +92,16 @@ yandex_supported_languages = function(yandex_api_key, lang="en")
 #' detected_languaged = yandex_detect_language(yandex_api_key, text="voglio mangiare cena")
 
 
-yandex_detect_language=function(yandex_api_key, text="")
-{
+yandex_detect_language=function(yandex_api_key, text=""){
   url="https://translate.yandex.net/api/v1.5/tr.json/detect?"
-  if(text != "")
-  {
+  if(text != ""){
     body = list(key=yandex_api_key, text=text)
-
-  }
+    }
   post_content = POST(url, body = body, encode = "form")
   parsed_content = content(post_content, "parsed")
   detected_language = parsed_content$lang
   return(detected_language)
-}
+  }
 
 #' Translates text to the specified language
 #'
@@ -114,17 +117,14 @@ yandex_detect_language=function(yandex_api_key, text="")
 #' @examples
 #' translated_text = yandex_translate(yandex_api_key, text="voglio mangiare cena", lang="it-en")
 
-yandex_translate=function(yandex_api_key, text="",lang="")
-{
+yandex_translate = function(yandex_api_key, text="",lang=""){
   url="https://translate.yandex.net/api/v1.5/tr.json/translate?"
 
-  if(text != "")
-  {
+  if(text != ""){
     body = list(key=yandex_api_key, text=text)
     }
 
-  if(lang != "")
-  {
+  if(lang != ""){
     body = list(key=yandex_api_key, text=text, lang=lang)
   }
 
@@ -132,5 +132,4 @@ yandex_translate=function(yandex_api_key, text="",lang="")
   parsed_content = content(post_content, "parsed")
   translated_text = parsed_content$text[[1]]
   return(translated_text)
-
-}
+  }
