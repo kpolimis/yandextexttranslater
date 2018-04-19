@@ -1,4 +1,5 @@
 #' @import dplyr
+#' @import here
 #' @import httr
 #' @import stringi
 #' @import stringr
@@ -8,28 +9,36 @@
 #' @title Uses console input to save and load .yml file with yandex api key
 #'
 #' @return Creates global environment variable yandex_api_key in one of two ways.
-#' First, if yandex_api_key.yml exists, yandex_api_key takes the value of api_key field in the .yml file.
-#' Otherwise, console input is saved to yandex_api_key.yml and the api_key field from .yml is the yandex_api_key
+#' First, given a file directory (default directory created with `here` package), 
+#' if yandex_api_key.yml exists, yandex_api_key takes the value of api_key field in the .yml file.
+#' Otherwise, console input is saved to yandex_api_key.yml in the given directory 
+#' and the api_key field from .yml is the yandex_api_key
 #' @export
 #' @examples
-#' load_api_key()
+#' load_api_key(directory)
 
-load_api_key = function(){
-  destfile = "yandex_api_key.yml"
+load_api_key = function(directory){
+  if (directory==""){
+    folder = here()
+  } else {
+    folder = directory
+    }
+  destfile = paste(folder, "yandex_api_key.yml", sep = "/")
   if(file.exists(destfile)){
-    print(" yandex_api_key.yml already exists")
+    cat("\n")
+    print("yandex_api_key.yml already exists")
     print("adding previously saved yandex api credentials to environment")
-    yandex_api_key <<- yaml.load_file("yandex_api_key.yml")$api_key
+    yandex_api_key <<- yaml.load_file(destfile)$api_key
     }
   if(!file.exists(destfile)){
     n = readline(prompt = "Enter your yandex api key: ")
     print("creating yandex_api_key.yml")
     api_yaml = paste(as.name("api_key: "), "\"", n, "\"", sep="")
-    res = tryCatch(write(api_yaml,file = destfile),
+    res = tryCatch(write(api_yaml,file =  destfile,
                    method = "auto",
-                   error=function(e) 1)
+                   error=function(e) 1))
 
-    yandex_api_key <<- yaml.load_file("yandex_api_key.yml")$api_key
+    yandex_api_key <<- yaml.load_file(destfile)$api_key
     }
   }
 
