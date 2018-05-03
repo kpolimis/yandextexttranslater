@@ -1,6 +1,15 @@
 # yandextexttranslater  
 
-R package to interface with Yandex Translate API for text translation services  
+[![CircleCI](https://circleci.com/gh/kpolimis/yandextexttranslater.svg?style=svg)](https://circleci.com/gh/kpolimis/yandextexttranslater)
+
+## Overview
+
+
+yandextexttranslater allows R users to interface with Yandex Translate API for text translation services.
+Use this package by following the instructions below to install the package and register for a
+free Yandex Translate API key.
+
+## Install
 
 Use devtools package to install from GitHub:
 
@@ -22,7 +31,11 @@ ls("package:yandextexttranslater")
 ```R
 [1] "load_api_key"   "yandex_detect_language"   "yandex_supported_languages"   "yandex_translate"
 ```
-First, load and save Yandex API key to .yml file and global environment for Yandex Translate API services
+First, use the function's text prompt to enter and save your Yandex API key to a file called
+yandex_api_key.yml; this function also adds the value yandex_api_key to the global environment.
+You can alternatively specify a directory in the function call that contains yandex_api_key.yml
+and load the Yandex API key to your global environment.
+
 ```R
 load_api_key(directory=="")
 ```
