@@ -34,9 +34,9 @@ load_api_key = function(directory=""){
     n = readline(prompt = "Enter your yandex api key: ")
     print("creating yandex_api_key.yml")
     api_yaml = paste(as.name("api_key: "), "\"", n, "\"", sep="")
-    res = tryCatch(write(api_yaml,file =  destfile,
-                   method = "auto",
-                   error=function(e) 1))
+    res = tryCatch({write(api_yaml,file =  destfile,
+                   method = "auto")},
+      error=function(e){cat("ERROR :",conditionMessage(e), "\n")})
 
     yandex_api_key <<- yaml.load_file(destfile)$api_key
     }

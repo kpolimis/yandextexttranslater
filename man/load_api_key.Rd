@@ -17,5 +17,5 @@ Otherwise, console input is saved to yandex_api_key.yml in the given directory
 and the api_key field from .yml is the yandex_api_key
 }
 \examples{
-load_api_key(directory)
+load_api_key(directory="")
 }
