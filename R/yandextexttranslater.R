@@ -15,7 +15,7 @@
 #' and the api_key field from .yml is the yandex_api_key
 #' @export
 #' @examples
-#' load_api_key(directory)
+#' load_api_key(directory="")
 
 load_api_key = function(directory=""){
   if (directory==""){

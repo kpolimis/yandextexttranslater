@@ -4,7 +4,7 @@
 \alias{load_api_key}
 \title{Uses console input to save and load .yml file with yandex api key}
 \usage{
-load_api_key(directory)
+load_api_key(directory = "")
 }
 \arguments{
 \item{directory}{File directory that contains "yandex_api_key.yml"}
