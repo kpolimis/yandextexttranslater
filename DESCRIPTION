@@ -1,6 +1,6 @@
 Package: yandextexttranslater
 Title: R package to interface with the Yandex Translate API
-Version: 0.2
+Version: 0.2.1
 Authors@R: person("Kivan", "Polimis", email = "kivan.polimis@gmail.com", role = c("aut", "cre"))
 Description: Uses the Yandex Translate API services for text translation services such as language detection and text translation
 Depends: R (>= 3.4.1)
