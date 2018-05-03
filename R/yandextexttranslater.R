@@ -17,7 +17,7 @@
 #' @examples
 #' load_api_key(directory)
 
-load_api_key = function(directory==""){
+load_api_key = function(directory=""){
   if (directory==""){
     folder = here()
   } else {

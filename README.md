@@ -37,7 +37,7 @@ You can alternatively specify a directory in the function call that contains yan
 and load the Yandex API key to your global environment.
 
 ```R
-load_api_key(directory=="")
+load_api_key(directory="")
 ```
 ### Yandex Translate API services
 ### See Resources below for full API documentation
