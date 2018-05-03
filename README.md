@@ -24,7 +24,7 @@ ls("package:yandextexttranslater")
 ```
 First, load and save Yandex API key to .yml file and global environment for Yandex Translate API services
 ```R
-load_api_key()
+load_api_key(directory=="")
 ```
 ### Yandex Translate API services
 ### See Resources below for full API documentation

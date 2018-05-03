@@ -9,7 +9,7 @@ Encoding: UTF-8
 LazyData: true
 URL: https://github.com/kpolimis/yandextexttranslater
 BugReports: https://github.com/kpolimis/yandextexttranslater/issues
-Maintainer: 'Kivan Polimis' <kivan.polimis@com>
+Maintainer: 'Kivan Polimis' <kivan.polimis@gmail.com>
 Imports:
     dplyr,
     here,
