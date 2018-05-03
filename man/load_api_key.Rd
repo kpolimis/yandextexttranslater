@@ -6,11 +6,14 @@
 \usage{
 load_api_key(directory)
 }
+\arguments{
+\item{directory}{File directory that contains "yandex_api_key.yml"}
+}
 \value{
 Creates global environment variable yandex_api_key in one of two ways.
-First, given a file directory (default directory created with `here` package), 
+First, given a file directory (default directory created with `here` package),
 if yandex_api_key.yml exists, yandex_api_key takes the value of api_key field in the .yml file.
-Otherwise, console input is saved to yandex_api_key.yml in the given directory 
+Otherwise, console input is saved to yandex_api_key.yml in the given directory
 and the api_key field from .yml is the yandex_api_key
 }
 \examples{
